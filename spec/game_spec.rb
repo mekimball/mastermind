@@ -4,17 +4,25 @@ require './lib/placement'
 
 RSpec.describe Game do
   it 'exists' do
-    game = Game.new
+    peg1 = Pegs.new("blue", "B")
+    pegs = [peg1, peg1, peg1, peg1]
+    #placement = Placement.new(pegs)
+    game = Game.new(pegs)
     expect(game).to be_a(Game)
   end
 
-  xit 'starts' do
-    game = Game.new
+  it 'starts' do
+
+    peg1 = Pegs.new("blue", "B")
+    pegs = [peg1, peg1, peg1, peg1]
+    #placement = Placement.new(pegs)
+    game = Game.new(pegs)
     game.start
-    #expect(game).to be_a(Game)
+    expect(game.welcome_message).to eq "Welcome to MASTERMIND
+    Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
   end
 
-  it 'starts a game that places pegs' do
+  xit 'starts a game that places pegs' do
     game = Game.new
     game.start_game
     #expect(game)

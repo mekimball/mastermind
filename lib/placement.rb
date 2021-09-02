@@ -1,5 +1,6 @@
 class Placement
-  attr_reader :pegs
+  attr_reader :pegs,
+              :set
 
   def initialize(pegs)
     @pegs = pegs

@@ -1,8 +1,14 @@
 class Game
-    attr_reader :pegs
+    attr_reader :peg1,
+                :pegs,
+                :placement
+
 
   def initialize
-    # @pegs = pegs
+    @peg1 = Pegs.new("blue", "B")
+    @pegs = [peg1, peg1, peg1, peg1]
+    @placement = Placement.new(pegs)
+
   end
 
   def start
@@ -33,7 +39,8 @@ class Game
   end
 
   def start_game
-    puts "this is a placeholder"
+    placement.place_peg(pegs)
+    require "pry"; binding.pry
   end
 
 end

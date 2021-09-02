@@ -1,4 +1,3 @@
-require './lib/color'
 require './lib/pegs'
 
 RSpec.describe Pegs do

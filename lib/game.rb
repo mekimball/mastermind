@@ -4,30 +4,38 @@ class Game
                 :placement
 
 
-  def initialize
+  def initialize(pegs)
     @peg1 = Pegs.new("blue", "B")
     @pegs = [peg1, peg1, peg1, peg1]
     @placement = Placement.new(pegs)
-
   end
 
   def start
-    puts "Welcome to MASTERMIND
-    Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+    puts welcome_message
+    start_input
+  end
 
+  def welcome_message
+    "Welcome to MASTERMIND
+    Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+  end
+
+  def unsure
+    puts "I'm sorry I didn't understand that. Please try again"
+    puts "\n"
+  end
+
+  def start_input
     input = gets.chomp
     if input.downcase == "p"
       start_game
     elsif input.downcase == "i"
-      puts "\n"
       puts instructions
-      puts "\n"
       start
     elsif input.downcase == "q"
       exit
     else
-      puts "I'm sorry I didn't understand that. Please try again"
-      puts "\n"
+      unsure
       start
     end
   end
@@ -38,9 +46,23 @@ class Game
     code. Guess all pegs correctly to win the game."
   end
 
+  def choice
+    "Pick 4 colors (\e[34m(b)lue\e[0m, \e[32m(g)reen\e[0m, \e[33m(y)ellow\e[0m, \e[31m(r)ed\e[0m) to guess. They can be repeated, but the order matters. Press 'q' to quit."
+  end
+
   def start_game
     placement.place_peg(pegs)
-    require "pry"; binding.pry
+    puts choice
+    guess = []
+    guess << gets.chomp.upcase
+    if guess[0].downcase == "q"
+      exit
+    elsif guess.reduce == placement.set_details.join
+      puts "congrats you won"
+    else
+      puts "placeholder"
+      require "pry"; binding.pry
+    end
   end
 
 end

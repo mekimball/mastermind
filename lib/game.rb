@@ -3,8 +3,9 @@ class Game
                 :pegs,
                 :placement,
                 :guess_count,
-                :player_guess
-
+                :player_guess,
+                :g_time,
+                :s_time
 
   def initialize(pegs)
     @peg1 = Pegs.new("blue", "B")
@@ -12,10 +13,13 @@ class Game
     @placement = Placement.new(pegs)
     @guess_count = 0
     @player_guess = player_guess
+    @g_time = g_time
+    @s_time = s_time
   end
 
   def start
     puts welcome_message
+    start_time
     start_input
   end
 
@@ -38,6 +42,18 @@ class Game
     "Pick 4 colors (\e[34m(b)lue\e[0m, \e[32m(g)reen\e[0m, \e[33m(y)ellow\e[0m, \e[31m(r)ed\e[0m) to guess. They can be repeated, but the order matters. Enter 'q' to quit."
   end
 
+  def start_time
+    @s_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  end
+
+  def guess_time
+    @g_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+  end
+
+  def calculate_time
+    (@g_time - @s_time).round(2)
+  end
+
   def start_input
     input = gets.chomp
     if input.downcase == "p"
@@ -45,7 +61,7 @@ class Game
     elsif input.downcase == "i"
       puts instructions
       start_input
-    elsif input.downcase == "q" || "quit"
+    elsif input.downcase == ("q" || "quit")
       exit
     else
       unsure
@@ -61,6 +77,7 @@ class Game
   def guess
     puts choice
     @player_guess = gets.chomp
+    guess_time
     add_count
     checks_guess
   end
@@ -72,14 +89,15 @@ class Game
 
   def checks_guess
     # require "pry"; binding.pry
-    if @player_guess.downcase == "q" || "quit"
+    if @player_guess == ("q" || "quit")
       exit
-    elsif @player_guess.downcase == "c" || "cheat"
+    elsif @player_guess == ("c" || "cheat")
       puts "#{placement.set_details}"
     elsif @player_guess != placement.set_details
+      require "pry"; binding.pry
       puts "man you suck"
     else @player_guess == placement.set_details
-      puts "you won!"
+      puts "you won in #{calculate_time} seconds"
     end
   end
 

@@ -17,6 +17,6 @@ class Placement
   def set_details
     @set.map do |peg|
       peg.initial
-    end
+    end.join
   end
 end

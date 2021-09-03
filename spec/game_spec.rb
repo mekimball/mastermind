@@ -4,39 +4,49 @@ require './lib/placement'
 
 RSpec.describe Game do
   it 'exists' do
-    game = Game.new#(pegs)
+    peg1 = Pegs.new("blue", "B")
+    pegs = [peg1, peg1, peg1, peg1]
+    game = Game.new(pegs)
     expect(game).to be_a(Game)
   end
 
-  xit 'starts a game that places pegs' do
-    game = Game.new
+  it 'welcome_message' do
     peg1 = Pegs.new("blue", "B")
-    peg2 = Pegs.new("red", "R")
-    peg3 = Pegs.new("yellow", "Y")
-    peg4 = Pegs.new("green", "G")
-    pegs = [peg1, peg2, peg3, peg4]
-    placement = Placement.new(pegs)
-    placement.place_peg(pegs)
-    pegs_random_1 = placement.pegs
-    game.start_game
-    expect(pegs_random_1).not_to eq game.pegs
+    pegs = [peg1, peg1, peg1, peg1]
+    game = Game.new(pegs)
+    expect(game.welcome_message).to eq("Welcome to MASTERMIND
+    Would you like to (p)lay, read the (i)nstructions, or (q)uit?")
   end
 
-  xit 'records the number of guesses' do
-    game = Game.new
+  it 'unsure' do
     peg1 = Pegs.new("blue", "B")
-    peg2 = Pegs.new("red", "R")
-    peg3 = Pegs.new("yellow", "Y")
-    peg4 = Pegs.new("green", "G")
-    pegs = [peg1, peg2, peg3, peg4]
-    placement = Placement.new(pegs)
-    expect(game.guess_counter).to eq 0
-    placement.place_peg(pegs)
-    game.start_game
-    #execute guess_1
-    expect(game.guess_counter).to eq 1
-    #execute guess_2
-    expect(game.guess_counter).to eq 2
+    pegs = [peg1, peg1, peg1, peg1]
+    game = Game.new(pegs)
+    expect(game.unsure).to eq("I'm sorry I didn't understand that. Please try again")
+  end
+
+  it 'welcome' do
+    peg1 = Pegs.new("blue", "B")
+    pegs = [peg1, peg1, peg1, peg1]
+    game = Game.new(pegs)
+    expect(game.instructions).to eq("The object of MASTERMIND is to guess a secret code consisting of a series of 4
+    colored pegs. Each guess results in feedback narrowing down the possibilities of the
+    code. Guess all pegs correctly to win the game.")
+  end
+  it 'choice' do
+    peg1 = Pegs.new("blue", "B")
+    pegs = [peg1, peg1, peg1, peg1]
+    game = Game.new(pegs)
+    expect(game.choice).to eq("Pick 4 colors (\e[34m(b)lue\e[0m, \e[32m(g)reen\e[0m, \e[33m(y)ellow\e[0m, \e[31m(r)ed\e[0m) to guess. They can be repeated, but the order matters. Enter 'q' to quit.")
+  end
+
+  it 'add_count' do
+    peg1 = Pegs.new("blue", "B")
+    pegs = [peg1, peg1, peg1, peg1]
+    game = Game.new(pegs)
+    expect(game.guess_count).to eq(0)
+    game.add_count
+    expect(game.guess_count).to eq(1)
   end
 
   xit 'records the time of each guess' do

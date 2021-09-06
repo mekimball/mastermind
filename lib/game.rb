@@ -69,17 +69,22 @@ class Game
     end
   end
 
-  def start_game
+  def place_pegs
     placement.place_peg(pegs)
+  end
+
+  def start_game
+    place_pegs
     guess
   end
 
   def guess
     puts choice
-    @player_guess = gets.chomp
+    @player_guess = gets.chomp.split("")
     guess_time
     add_count
     checks_guess
+    @guess_array
   end
 
   def add_count
@@ -88,33 +93,32 @@ class Game
 
 
   def checks_guess
-    # require "pry"; binding.pry
     if @player_guess == ("q" || "quit")
       exit
     elsif @player_guess == ("c" || "cheat")
       puts "#{placement.set_details}"
     elsif @player_guess != placement.set_details
-      require "pry"; binding.pry
+      # placement_check
       puts "man you suck"
     else @player_guess == placement.set_details
-      puts "you won in #{calculate_time} seconds"
+       puts "you won in #{calculate_time} seconds"
     end
   end
 
+  def correct_place_number
+    # require "pry"; binding.pry
+    @placement.set_details.zip(@player_guess).filter_map do |first, second|
+      first if first == second
+    end.count
+  end
 
+
+  # def placement_check
+  #   require "pry"; binding.pry
+  #   if @guess_array.length != 4
+  #     puts "That is not a valid guess, please try again"
+  #   elsif @guess_array.includes?('b')
   #
-  #
-  #
-  #   puts choice
-  #   guess = []
-  #   guess << gets.chomp.upcase
-  #   if guess[0].downcase == "q"
-  #     exit
-  #   elsif guess.reduce == placement.set_details.join
-  #     puts "congrats you won"
-  #   else
-  #     puts "placeholder"
-  #     require "pry"; binding.pry
   #   end
-
+  # end
 end

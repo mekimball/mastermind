@@ -8,7 +8,7 @@ class Game
                 :s_time
 
   def initialize(pegs)
-    @peg1 = Pegs.new("blue", "B")
+    @peg1 = Pegs.new("yellow", "Y")
     @pegs = [peg1, peg1, peg1, peg1]
     @placement = Placement.new(pegs)
     @guess_count = 0
@@ -96,13 +96,29 @@ class Game
     if @player_guess == ("q" || "quit")
       exit
     elsif @player_guess == ("c" || "cheat")
-      puts "#{placement.set_details}"
+      display_cheat_code
     elsif @player_guess != placement.set_details
-      # placement_check
-      puts "man you suck"
-    else @player_guess == placement.set_details
-       puts "you won in #{calculate_time} seconds"
+      return "It thinks they don't match"
+      #if @player_guess.count > 4
+      #  puts "Too long"
+      #elsif @player_guess.count <4
+      #  puts "Too short"
+      #else
+      #  puts "#{@player_guess} has #{number_correct_elements} of the correct
+      #  elements with #{number_in_correct_positions} in the correct positions
+        #You've taken #{guess_count} guesses."
+      #end
+    elsif @player_guess == placement.set_details
+      #puts "you won in #{calculate_time} seconds"
+      return "@player_guess matches placement.set_details"
+    else
+      puts "invalid guess, try again"
     end
+  end
+
+  def display_cheat_code
+    puts "#{placement.set_details}"
+    placement.set_details
   end
 
   def correct_place_number
@@ -121,4 +137,5 @@ class Game
   #
   #   end
   # end
+
 end

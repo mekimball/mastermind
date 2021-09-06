@@ -69,17 +69,22 @@ class Game
     end
   end
 
-  def start_game
+  def place_pegs
     placement.place_peg(pegs)
+  end
+
+  def start_game
+    place_pegs
     guess
   end
 
   def guess
     puts choice
-    @player_guess = "yyyy"
+    @player_guess = gets.chomp.split("")
     guess_time
     add_count
     checks_guess
+    @guess_array
   end
 
   def add_count
@@ -115,5 +120,22 @@ class Game
     puts "#{placement.set_details}"
     placement.set_details
   end
+
+  def correct_place_number
+    # require "pry"; binding.pry
+    @placement.set_details.zip(@player_guess).filter_map do |first, second|
+      first if first == second
+    end.count
+  end
+
+
+  # def placement_check
+  #   require "pry"; binding.pry
+  #   if @guess_array.length != 4
+  #     puts "That is not a valid guess, please try again"
+  #   elsif @guess_array.includes?('b')
+  #
+  #   end
+  # end
 
 end

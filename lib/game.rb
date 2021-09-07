@@ -1,5 +1,8 @@
 class Game
     attr_reader :peg1,
+                :peg2,
+                :peg3,
+                :peg4,
                 :pegs,
                 :placement,
                 :guess_count,
@@ -9,7 +12,10 @@ class Game
 
   def initialize(pegs)
     @peg1 = Pegs.new("yellow", "Y")
-    @pegs = [peg1, peg1, peg1, peg1]
+    @peg2 = Pegs.new("red", "r")
+    @peg3 = Pegs.new("blue", "b")
+    @peg4 = Pegs.new("green", "g")
+    @pegs = [peg1, peg2, peg3, peg4]
     @placement = Placement.new(pegs)
     @guess_count = 0
     @player_guess = player_guess
@@ -82,37 +88,46 @@ class Game
     puts choice
     @player_guess = gets.chomp.split("")
     guess_time
-    add_count
     checks_guess
-    @guess_array
   end
 
   def add_count
     @guess_count += 1
   end
 
+  def end_game
+    puts "Congratulations! You guessed the sequence #{placement.set_details} in #{@guess_count} guesses over #{calculate_time} seconds."
+    puts "Do you want to (p)lay again or (q)uit?"
+    @placement = Placement.new(pegs)
+    @guess_count = 0
+    start_time
+    start_input
+  end
+
 
   def checks_guess
-    if @player_guess == ("q" || "quit")
+    if @player_guess == ["q"] || @player_guess == ["q", "u", "i", "t"]
       exit
-    elsif @player_guess == ("c" || "cheat")
+    elsif @player_guess == ["c"] || @player_guess == ["c", "h", "e", "a", "t"]
       display_cheat_code
-    elsif @player_guess != placement.set_details
-      return "It thinks they don't match"
-      #if @player_guess.count > 4
-      #  puts "Too long"
-      #elsif @player_guess.count <4
-      #  puts "Too short"
-      #else
-      #  puts "#{@player_guess} has #{number_correct_elements} of the correct
-      #  elements with #{number_in_correct_positions} in the correct positions
-        #You've taken #{guess_count} guesses."
-      #end
+      guess
+    elsif @player_guess.count < 4
+      puts "That is too short, try again"
+      guess
+    elsif @player_guess.count > 4
+      puts "That is too long, try again"
+      guess
+    elsif valid_guess > 4
+      puts "That is not a valid guess. Please try again"
+      guess
     elsif @player_guess == placement.set_details
-      #puts "you won in #{calculate_time} seconds"
-      return "@player_guess matches placement.set_details"
+      add_count
+      end_game
     else
-      puts "invalid guess, try again"
+      add_count
+      puts "#{@player_guess} has (placeholder) correct elements with #{correct_place_number} in the correct positions."
+      puts "You have taken #{@guess_count} guesses"
+      guess
     end
   end
 
@@ -121,21 +136,15 @@ class Game
     placement.set_details
   end
 
-  def correct_place_number
+  def valid_guess
+    total = (["y", "g", "r", "b"] + @player_guess)
+    total.uniq.count
     # require "pry"; binding.pry
+  end
+
+  def correct_place_number
     @placement.set_details.zip(@player_guess).filter_map do |first, second|
       first if first == second
     end.count
   end
-
-
-  # def placement_check
-  #   require "pry"; binding.pry
-  #   if @guess_array.length != 4
-  #     puts "That is not a valid guess, please try again"
-  #   elsif @guess_array.includes?('b')
-  #
-  #   end
-  # end
-
 end

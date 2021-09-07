@@ -64,7 +64,6 @@ RSpec.describe Game do
     expect(guess_2_time).to be_within(0.1).of(1.00)
   end
 
-
   it 'checks a guess' do
     peg1 = Pegs.new("yellow", "Y")
     peg2 = Pegs.new("yellow", "Y")
@@ -76,7 +75,7 @@ RSpec.describe Game do
     placement.place_peg(pegs)
     placement_details = placement.set_details
     game.start_game
-    @player_guess = "yyyy"
+    @player_guess = ["y", "y", "y", "y"]
     expect(game.checks_guess).to eq "@player_guess matches placement.set_details"
     #@player_guess = "bbbb"
     #expect(game.checks_guess).to start_with "man you"
@@ -94,6 +93,7 @@ RSpec.describe Game do
     placement_details = placement.set_details
     game.start_game
     expect(game.display_cheat_code).to eq(placement_details)
+  end
 
   xit 'checks a guess' do
    peg1 = Pegs.new("yellow", "Y")
@@ -111,7 +111,7 @@ RSpec.describe Game do
    expect(game.checks_guess).to eq("man you suck")
  end
 
-  it 'correct_place_number' do
+  xit 'correct_place_number' do
     peg1 = Pegs.new("blue", "B")
     pegs = [peg1, peg1, peg1, peg1]
     game = Game.new(pegs)
@@ -122,27 +122,3 @@ RSpec.describe Game do
     expect(game.correct_place_number).to eq(2)
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  #

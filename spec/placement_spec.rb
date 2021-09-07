@@ -34,5 +34,6 @@ RSpec.describe Placement do
     placement = Placement.new(pegs)
     placement.place_peg(pegs)
     expect(placement.set_details).to eq(["b", "b", "b", "b"])
+
   end
 end

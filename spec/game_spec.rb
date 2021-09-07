@@ -11,7 +11,7 @@ RSpec.describe Game do
   end
 
   it 'welcome_message' do
-    peg1 = Pegs.new("blue", "B")
+    peg1 = Pegs.new("blue", "b")
     pegs = [peg1, peg1, peg1, peg1]
     game = Game.new(pegs)
     expect(game.welcome_message).to eq("Welcome to MASTERMIND
@@ -19,7 +19,7 @@ RSpec.describe Game do
   end
 
   it 'unsure' do
-    peg1 = Pegs.new("blue", "B")
+    peg1 = Pegs.new("blue", "b")
     pegs = [peg1, peg1, peg1, peg1]
     game = Game.new(pegs)
     expect(game.unsure).to eq("I'm sorry I didn't understand that. Please try again")
@@ -64,6 +64,7 @@ RSpec.describe Game do
     expect(guess_2_time).to be_within(0.1).of(1.00)
   end
 
+
   it 'checks a guess' do
     peg1 = Pegs.new("yellow", "Y")
     peg2 = Pegs.new("yellow", "Y")
@@ -81,8 +82,6 @@ RSpec.describe Game do
     #expect(game.checks_guess).to start_with "man you"
   end
 
-
-
   it 'has a cheat option' do
     peg1 = Pegs.new("yellow", "Y")
     peg2 = Pegs.new("yellow", "Y")
@@ -95,6 +94,32 @@ RSpec.describe Game do
     placement_details = placement.set_details
     game.start_game
     expect(game.display_cheat_code).to eq(placement_details)
+
+  xit 'checks a guess' do
+   peg1 = Pegs.new("yellow", "Y")
+   peg2 = Pegs.new("yellow", "Y")
+   peg3 = Pegs.new("yellow", "Y")
+   peg4 = Pegs.new("yellow", "Y")
+   pegs = [peg1, peg2, peg3, peg4]
+   game = Game.new(pegs)
+   placement = Placement.new(pegs)
+   placement.place_peg(pegs)
+   placement_details = placement.set_details
+   @player_guess = "yyyy"
+   expect(game.checks_guess).to eq("you won")
+   @player_guess = "bbbb"
+   expect(game.checks_guess).to eq("man you suck")
+ end
+
+  it 'correct_place_number' do
+    peg1 = Pegs.new("blue", "B")
+    pegs = [peg1, peg1, peg1, peg1]
+    game = Game.new(pegs)
+    placement = Placement.new(pegs)
+    # game.start_game
+    @player_guess = ["b", "b", "y", "g"]
+    game.place_pegs
+    expect(game.correct_place_number).to eq(2)
   end
 end
 

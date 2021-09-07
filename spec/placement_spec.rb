@@ -34,6 +34,6 @@ RSpec.describe Placement do
     # pegs.shuffle!(random: Random.new(1))
     placement = Placement.new(pegs)
     placement.place_peg(pegs)
-    expect(placement.set_details).to eq("BBBB")
+    expect(placement.set_details).to eq("bbbb")
   end
 end

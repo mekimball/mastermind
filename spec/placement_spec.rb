@@ -17,9 +17,6 @@ RSpec.describe Placement do
 
   it 'can place pegs' do
     peg1 = Pegs.new("blue", "B")
-    # peg2 = Pegs.new("red", "R")
-    # peg3 = Pegs.new(yellow)
-    # peg4 = Pegs.new(green)
     pegs = [peg1, peg1, peg1, peg1]
     placement = Placement.new(pegs)
     expect(placement.place_peg(pegs)).to eq([peg1, peg1, peg1, peg1])
@@ -27,13 +24,9 @@ RSpec.describe Placement do
 
   it 'can list pegs' do
     peg1 = Pegs.new("blue", "B")
-    # peg2 = Pegs.new(red)
-    # peg3 = Pegs.new(yellow)
-    # peg4 = Pegs.new(green)
     pegs = [peg1, peg1, peg1, peg1]
     placement = Placement.new(pegs)
     placement.place_peg(pegs)
     expect(placement.set_details).to eq(["b", "b", "b", "b"])
-
   end
 end

@@ -33,6 +33,7 @@ RSpec.describe Game do
     colored pegs. Each guess results in feedback narrowing down the possibilities of the
     code. Guess all pegs correctly to win the game.")
   end
+
   it 'choice' do
     peg1 = Pegs.new("blue", "B")
     pegs = [peg1, peg1, peg1, peg1]
@@ -47,6 +48,10 @@ RSpec.describe Game do
     expect(game.guess_count).to eq(0)
     game.add_count
     expect(game.guess_count).to eq(1)
+    game.add_count
+    game.add_count
+    game.add_count
+    expect(game.guess_count).to eq(4)
   end
 
   it 'records the time of a guess' do
@@ -74,12 +79,11 @@ RSpec.describe Game do
     placement = Placement.new(pegs)
     placement.place_peg(pegs)
     placement_details = placement.set_details
-    game.start_game
-    @player_guess = ["y", "y", "y", "y"]
-    expect(game.checks_guess).to eq "@player_guess matches placement.set_details"
+    allow(game.player_guess).to receive(:input).and_return(["y", "y", "y", "y"])
+    expect(game.checks_guess).to eq(guess_message)
   end
 
-  it 'has a cheat option' do
+  xit 'has a cheat option' do
     peg1 = Pegs.new("yellow", "Y")
     peg2 = Pegs.new("yellow", "Y")
     peg3 = Pegs.new("yellow", "Y")
@@ -89,27 +93,27 @@ RSpec.describe Game do
     placement = Placement.new(pegs)
     placement.place_peg(pegs)
     placement_details = placement.set_details
-    game.start_game
+    allow(game.display_cheat_code).to receive(:input).and_return(["y", "y", "y", "y"])
     expect(game.display_cheat_code).to eq(placement_details)
   end
 
-  xit 'checks a guess' do
-   peg1 = Pegs.new("yellow", "Y")
-   peg2 = Pegs.new("yellow", "Y")
-   peg3 = Pegs.new("yellow", "Y")
-   peg4 = Pegs.new("yellow", "Y")
-   pegs = [peg1, peg2, peg3, peg4]
-   game = Game.new(pegs)
-   placement = Placement.new(pegs)
-   placement.place_peg(pegs)
-   placement_details = placement.set_details
-   @player_guess = "yyyy"
-   expect(game.checks_guess).to eq("you won")
-   @player_guess = "bbbb"
-   expect(game.checks_guess).to eq("man you suck")
- end
+ #  xit 'checks a guess' do
+ #   peg1 = Pegs.new("yellow", "Y")
+ #   peg2 = Pegs.new("yellow", "Y")
+ #   peg3 = Pegs.new("yellow", "Y")
+ #   peg4 = Pegs.new("yellow", "Y")
+ #   pegs = [peg1, peg2, peg3, peg4]
+ #   game = Game.new(pegs)
+ #   placement = Placement.new(pegs)
+ #   placement.place_peg(pegs)
+ #   placement_details = placement.set_details
+ #   @player_guess = "yyyy"
+ #   expect(game.checks_guess).to eq("you won")
+ #   @player_guess = "bbbb"
+ #   expect(game.checks_guess).to eq("man you suck")
+ # end
 
-  xit 'correct_place_number' do
+xit 'correct_place_number' do
     peg1 = Pegs.new("blue", "B")
     pegs = [peg1, peg1, peg1, peg1]
     game = Game.new(pegs)

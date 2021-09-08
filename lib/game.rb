@@ -66,6 +66,7 @@ class Game
       start_game
     elsif input.downcase == "i"
       puts instructions
+      puts welcome_message
       start_input
     elsif input.downcase == ("q" || "quit")
       exit
@@ -125,7 +126,7 @@ class Game
       end_game
     else
       add_count
-      puts "#{@player_guess} has (placeholder) correct elements with #{correct_place_number} in the correct positions."
+      puts "#{@player_guess} has #{correct_colors} correct elements with #{correct_place_number} in the correct positions."
       puts "You have taken #{@guess_count} guesses"
       guess
     end
@@ -139,12 +140,22 @@ class Game
   def valid_guess
     total = (["y", "g", "r", "b"] + @player_guess)
     total.uniq.count
-    # require "pry"; binding.pry
   end
 
   def correct_place_number
+    # require "pry"; binding.pry
     @placement.set_details.zip(@player_guess).filter_map do |first, second|
       first if first == second
     end.count
+  end
+
+  def correct_colors
+    color_correct = []
+    color_correct << @player_guess
+    color_correct.flatten!
+    placement.set_details.each do |color|
+      color_correct.delete_at(color_correct.index(color)) rescue ""
+    end
+    4 - color_correct.length
   end
 end

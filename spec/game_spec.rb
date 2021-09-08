@@ -77,8 +77,6 @@ RSpec.describe Game do
     game.start_game
     @player_guess = ["y", "y", "y", "y"]
     expect(game.checks_guess).to eq "@player_guess matches placement.set_details"
-    #@player_guess = "bbbb"
-    #expect(game.checks_guess).to start_with "man you"
   end
 
   it 'has a cheat option' do
@@ -116,7 +114,6 @@ RSpec.describe Game do
     pegs = [peg1, peg1, peg1, peg1]
     game = Game.new(pegs)
     placement = Placement.new(pegs)
-    # game.start_game
     @player_guess = ["b", "b", "y", "g"]
     game.place_pegs
     expect(game.correct_place_number).to eq(2)

@@ -62,13 +62,13 @@ class Game
 
   def start_input
     input = gets.chomp
-    if input.downcase == "p"
+    if input.downcase == "p" || input.downcase == "play"
       start_game
-    elsif input.downcase == "i"
+    elsif input.downcase == "i" || input.downcase == "instructions"
       puts instructions
       puts welcome_message
       start_input
-    elsif input.downcase == ("q" || "quit")
+    elsif input.downcase == "q" || input.downcase == "quit"
       exit
     else
       unsure

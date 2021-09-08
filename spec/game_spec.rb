@@ -83,43 +83,23 @@ RSpec.describe Game do
     expect(game.checks_guess).to eq(guess_message)
   end
 
-  xit 'has a cheat option' do
+  it 'has a cheat option' do
     peg1 = Pegs.new("yellow", "Y")
-    peg2 = Pegs.new("yellow", "Y")
-    peg3 = Pegs.new("yellow", "Y")
-    peg4 = Pegs.new("yellow", "Y")
-    pegs = [peg1, peg2, peg3, peg4]
+    pegs = [peg1, peg1, peg1, peg1]
     game = Game.new(pegs)
     placement = Placement.new(pegs)
     placement.place_peg(pegs)
-    placement_details = placement.set_details
-    allow(game.display_cheat_code).to receive(:input).and_return(["y", "y", "y", "y"])
-    expect(game.display_cheat_code).to eq(placement_details)
+    allow(game.place_pegs).to receive(:input).and_return(['y','y','y','y'])
+    expect(game.display_cheat_code.count).to eq(4)
   end
 
- #  xit 'checks a guess' do
- #   peg1 = Pegs.new("yellow", "Y")
- #   peg2 = Pegs.new("yellow", "Y")
- #   peg3 = Pegs.new("yellow", "Y")
- #   peg4 = Pegs.new("yellow", "Y")
- #   pegs = [peg1, peg2, peg3, peg4]
- #   game = Game.new(pegs)
- #   placement = Placement.new(pegs)
- #   placement.place_peg(pegs)
- #   placement_details = placement.set_details
- #   @player_guess = "yyyy"
- #   expect(game.checks_guess).to eq("you won")
- #   @player_guess = "bbbb"
- #   expect(game.checks_guess).to eq("man you suck")
- # end
-
-xit 'correct_place_number' do
+it 'correct_place_number' do
     peg1 = Pegs.new("blue", "B")
     pegs = [peg1, peg1, peg1, peg1]
     game = Game.new(pegs)
     placement = Placement.new(pegs)
-    @player_guess = ["b", "b", "y", "g"]
     game.place_pegs
+    @player_guess = ['b','b','y','y']
     expect(game.correct_place_number).to eq(2)
   end
 end

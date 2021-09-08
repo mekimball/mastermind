@@ -16,7 +16,7 @@ class Placement
 
   def set_details
     @set.map do |peg|
-      peg.initial.downcase
+      peg.initial
     end
   end
 end

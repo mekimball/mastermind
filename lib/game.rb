@@ -105,6 +105,12 @@ class Game
     start_input
   end
 
+  def guess_message
+    add_count
+    puts "#{@player_guess} has #{correct_colors} correct elements with #{correct_place_number} in the correct positions."
+    puts "You have taken #{@guess_count} guesses"
+    guess
+  end
 
   def checks_guess
     if @player_guess == ["q"] || @player_guess == ["q", "u", "i", "t"]
@@ -125,10 +131,7 @@ class Game
       add_count
       end_game
     else
-      add_count
-      puts "#{@player_guess} has #{correct_colors} correct elements with #{correct_place_number} in the correct positions."
-      puts "You have taken #{@guess_count} guesses"
-      guess
+      guess_message
     end
   end
 
@@ -143,7 +146,6 @@ class Game
   end
 
   def correct_place_number
-    # require "pry"; binding.pry
     @placement.set_details.zip(@player_guess).filter_map do |first, second|
       first if first == second
     end.count
